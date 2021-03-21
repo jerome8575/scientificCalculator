@@ -4,15 +4,31 @@ import operator
 def parse(expression):
     exp = []
     functions = ["sin", "cos", "tan", "ln"]
+    operators = ["+", "-", "*", "/", "^"]
     fct = ""
+    num = ""
+    numFilled = False
     for char in expression:
-        if char.isalpha():
-            fct+=char
-            if fct in functions:
-                exp.append(fct)
-                fct = ""
+        if char.isnumeric():
+            num+=char
+            numFilled = True
         else:
-            exp.append(char)
+
+            if numFilled == True:
+                exp.append(num)
+                num = ""
+                numFilled = False
+
+            if char == "(" or char == ")":
+                exp.append(char)
+            elif char.isalpha():
+                fct += char
+                if fct in functions:
+                    exp.append(fct)
+                    fct = ""
+            elif char in operators:
+                exp.append(char)
+
     return exp
 
 def convertToRPN(expression):
@@ -69,5 +85,10 @@ def evaluate(expression):
     return evaluatePostix(pf)
 
 
+def testParse():
+    print(parse("(sin(56))"))
+    print(parse("(5^41)"))
+    print(parse("(34+23)"))
 
+testParse()
 
