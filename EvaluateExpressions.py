@@ -1,19 +1,23 @@
 from StackAndQueue import Stack, Queue
 import operator
+import math
 
 def parse(expression):
+    expressionList = []
+    expressionList[:0] = expression
+    expressionList.insert(0, "(")
+    expressionList.append(")")
     exp = []
     functions = ["sin", "cos", "tan", "ln"]
     operators = ["+", "-", "*", "/", "^"]
     fct = ""
     num = ""
     numFilled = False
-    for char in expression:
+    for char in expressionList:
         if char.isnumeric():
             num+=char
             numFilled = True
         else:
-
             if numFilled == True:
                 exp.append(num)
                 num = ""
@@ -33,6 +37,7 @@ def parse(expression):
 
 def convertToRPN(expression):
     precedence = {"+": 1, "-": 1, "*": 2, "/": 2}
+    functions = ["sin", "cos", "tan", "ln"]
     exp = parse(expression)
     operators = Stack()
     output = Queue()
@@ -50,6 +55,8 @@ def convertToRPN(expression):
                     break
                 else:
                     output.push(operators.pop())
+        elif elem in functions:
+            operators.push(elem)
         else:
             while not operators.isEmpty():
                 topStack = operators.peep()
@@ -86,9 +93,15 @@ def evaluate(expression):
 
 
 def testParse():
-    print(parse("(sin(56))"))
-    print(parse("(5^41)"))
-    print(parse("(34+23)"))
+    print(parse("sin(56)"))
+    print(parse("5^41"))
+    print(parse("34+23"))
 
-testParse()
+def testconvertToRPN():
+    print(convertToRPN("sin(3)"))
+    print(convertToRPN("5+44"))
+    print(convertToRPN("sin(3)"))
+
+
+testconvertToRPN()
 
