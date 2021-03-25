@@ -36,7 +36,7 @@ def parse(expression):
     return exp
 
 def convertToRPN(expression):
-    precedence = {"+": 1, "-": 1, "*": 2, "/": 2}
+    precedence = {"+": 1, "-": 1, "*": 2, "/": 2, "^": 3}
     functions = ["sin", "cos", "tan", "ln"]
     exp = parse(expression)
     operators = Stack()
@@ -61,7 +61,10 @@ def convertToRPN(expression):
             while not operators.isEmpty():
                 topStack = operators.peep()
                 if topStack == "(":
+                    operators.pop()
                     break
+                if topStack in functions:
+                    continue
                 elif precedence[elem] <= precedence[topStack]:
                     output.push(operators.pop())
             operators.push(elem)
@@ -71,19 +74,24 @@ def convertToRPN(expression):
     return output.returnQueueAsList()
 
 def evaluatePostix(pfExpression):
-    ops = {"+": operator.add, "-": operator.sub, "/": operator.truediv, "*": operator.mul}
+    ops = {"+": operator.add, "-": operator.sub, "/": operator.truediv, "*": operator.mul, "^": math.pow}
+    functions = {"sin": math.sin, "cos": math.cos, "tan": math.tan, "ln": math.log}
     stack = Stack()
     for i in range(len(pfExpression)):
         elem = pfExpression[i]
-        if elem not in ops.keys():
-            stack.push(elem)
-        else:
+        if elem in functions.keys():
+            num = float(stack.pop())
+            stack.push(functions[elem](num))
+        elif elem in ops.keys():
             a = float(stack.pop())
             b = float(stack.pop())
-            r = ops[elem](b,a)
+            r = ops[elem](b, a)
             stack.push(r)
+        else:
+            stack.push(elem)
+
     result = stack.pop()
-    return result
+    return round(result, 10)
 
 
 def evaluate(expression):
@@ -101,7 +109,8 @@ def testconvertToRPN():
     print(convertToRPN("sin(3)"))
     print(convertToRPN("5+44"))
     print(convertToRPN("sin(3)"))
+    print(convertToRPN("sin(cos(sin(45+ln(2))))"))
 
-
-testconvertToRPN()
-
+def testEvaluate():
+    print(evaluate("sin(3)"))
+    print(evaluate("sin(cos(sin(45+ln(2))))"))
