@@ -4,10 +4,10 @@ class Display:
 
     def __init__(self):
         self.frm_display = tk.Frame()
-        self.frm_display.pack()
+        self.frm_display.pack(pady=5)
 
-        self.disp = tk.Label(master=self.frm_display)
-        self.disp.config(width=10, height=4)
+        self.disp = tk.Label(master=self.frm_display, bg="light gray", font="Ubuntu 11")
+        self.disp.config(width=13, height=3)
         self.disp.pack()
 
 
