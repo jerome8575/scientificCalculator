@@ -6,8 +6,8 @@ class Display:
         self.frm_display = tk.Frame()
         self.frm_display.pack(pady=5)
 
-        self.disp = tk.Label(master=self.frm_display, bg="light gray", font="Ubuntu 11")
-        self.disp.config(width=13, height=3)
+        self.disp = tk.Label(master=self.frm_display, bg="#343434", fg="White", font="Ubuntu 32", anchor='e')
+        self.disp.config(width=16, height=3)
         self.disp.pack()
 
 

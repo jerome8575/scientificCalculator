@@ -17,27 +17,27 @@ class Calculator:
         style = ttk.Style()
         style.configure()"""
 
-    def createButton(self, text, color="gray"):
+    def createButton(self, text, color, textColor):
         btn = tk.Button(text=text, master=self.frm_buttons)
-        btn.config(width=2, height=2, bg=color)
+        btn.config(width=8, height=4, bg=color, fg=textColor, font="Ubuntu 12")
         btn.bind("<Button-1>", self.buttonPressed)
         return btn
 
     def createButtons(self):
-        operators = ["/", "*", "+", "-", "enter"]
+        operators = ["/", "*", "+", "-", "="]
         functions = ["(", ")", "sin", "cos", "tan", "^", "ln", "e^x", "del"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "(-)"]
 
         buttons = {}
         # create digits
         for num in numbers:
-            btn = self.createButton(num, "white")
+            btn = self.createButton(num, "#7A7A7A", "White")
             buttons[str(num)] = btn
         for fct in functions:
-            btn = self.createButton(fct)
+            btn = self.createButton(fct, "#575757", "White")
             buttons[fct] = btn
         for op in operators:
-            btn = self.createButton(op, "white")
+            btn = self.createButton(op, "#7A7A7A", "White")
             buttons[str(op)] = btn
 
         return buttons
@@ -53,7 +53,7 @@ class Calculator:
     def buttonPressed(self, event):
         btn = event.widget
         text = btn["text"]
-        if text == "enter":
+        if text == "=":
             self.enter()
         elif text == "del":
             self.deleteEntry()
@@ -63,15 +63,15 @@ class Calculator:
     def placeButtons(self):
 
         # place operators
-        self.btns["/"].grid(row=0, column=4, padx=2, pady=2)
-        self.btns["*"].grid(row=1, column=4, padx=2, pady=2)
-        self.btns["-"].grid(row=2, column=4, padx=2, pady=2)
-        self.btns["+"].grid(row=3, column=4, padx=2, pady=2)
+        self.btns["/"].grid(row=0, column=4)
+        self.btns["*"].grid(row=1, column=4)
+        self.btns["-"].grid(row=2, column=4)
+        self.btns["+"].grid(row=3, column=4)
 
         # place top row trig functions
-        self.btns["sin"].grid(row=0, column=1, padx=2, pady=2)
-        self.btns["cos"].grid(row=0, column=2, padx=2, pady=2)
-        self.btns["tan"].grid(row=0, column=3, padx=2, pady=2)
+        self.btns["sin"].grid(row=0, column=1)
+        self.btns["cos"].grid(row=0, column=2)
+        self.btns["tan"].grid(row=0, column=3)
 
         # place left column exponential functions
         self.btns["ln"].grid(row=0, column=0)
@@ -81,7 +81,7 @@ class Calculator:
 
         # enter and del button
         self.btns["del"].grid(row=4, column=0)
-        self.btns["enter"].grid(row=4, column=4)
+        self.btns["="].grid(row=4, column=4)
 
         # place digits and ., (-)
         digit = 7
@@ -95,4 +95,4 @@ class Calculator:
         self.btns["(-)"].grid(row=4, column=3)
 
 
-        self.frm_buttons.pack(padx=5, pady=5)
+        self.frm_buttons.pack()
