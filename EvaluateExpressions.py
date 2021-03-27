@@ -8,23 +8,30 @@ def parse(expression):
     expressionList.insert(0, "(")
     expressionList.append(")")
     exp = []
+
     functions = ["sin", "cos", "tan", "ln"]
     operators = ["+", "-", "*", "/", "^"]
+    pi = "π"
+
+
     fct = ""
     num = ""
     numFilled = False
     for char in expressionList:
-        if char.isnumeric():
-            num+=char
+        if char.isdecimal():
+            num += char
             numFilled = True
         else:
             if numFilled == True:
                 exp.append(num)
                 num = ""
                 numFilled = False
-
             if char == "(" or char == ")":
                 exp.append(char)
+            elif char == pi:
+                exp.append(math.pi)
+            elif char == "e":
+                exp.append(math.exp(1))
             elif char.isalpha():
                 fct += char
                 if fct in functions:
@@ -32,7 +39,6 @@ def parse(expression):
                     fct = ""
             elif char in operators:
                 exp.append(char)
-
     return exp
 
 def convertToRPN(expression):
@@ -43,7 +49,7 @@ def convertToRPN(expression):
     output = Queue()
 
     for elem in exp:
-        if elem.isnumeric():
+        if type(elem) == float or elem.isdecimal():
             output.push(elem)
         elif elem == "(":
             operators.push(elem)
@@ -88,7 +94,7 @@ def evaluatePostix(pfExpression):
             r = ops[elem](b, a)
             stack.push(r)
         else:
-            stack.push(elem)
+            stack.push(float(elem))
 
     result = stack.pop()
     return round(result, 10)

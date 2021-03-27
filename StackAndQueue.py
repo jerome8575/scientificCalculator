@@ -18,6 +18,9 @@ class Stack:
     def isEmpty(self):
         if len(self.stack) == 0:
             return True
+    def clearStack(self):
+        while not self.isEmpty():
+            self.stack.pop()
     def printStack(self):
         print(self.stack)
 

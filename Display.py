@@ -1,4 +1,5 @@
 import tkinter as tk
+from StackAndQueue import Stack
 
 class Display:
 
@@ -10,9 +11,12 @@ class Display:
         self.disp.config(width=16, height=3)
         self.disp.pack()
 
+        self.history = Stack()
+
 
     def updateDisplay(self, text):
         self.disp.config(text=(self.disp["text"] + text))
+        self.history.push(self.disp["text"])
 
     def displayAnswer(self, text):
         self.disp.config(text=text)
