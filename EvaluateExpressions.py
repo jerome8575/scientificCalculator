@@ -153,6 +153,3 @@ def testEvaluate():
     print(evaluate("sin(cos(sin(45+ln(2))))"))
     print(evaluate("-6"))
 
-
-
-testParse()
