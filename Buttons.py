@@ -29,7 +29,7 @@ class Calculator:
         """ creates buttons with specified color, and text, appends them to a dictionary and returns the dictionary"""
 
         operators = ["/", "*", "+", "-", "="]
-        functions = ["(", ")", "sin", "cos", "tan", "^", "\u221A" ,"ln", "del", "clear", "\u03C0", "e", "x^2"]
+        functions = ["(", ")", "sin", "cos", "tan", "^", "\u221A" ,"ln", "\u2190", "clear", "\u03C0", "e", "x^2"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "(-)"]
 
         buttons = {}
@@ -78,7 +78,7 @@ class Calculator:
 
         if text == "=":
             self.enter()
-        elif text == "del":
+        elif text == "\u2190":
             self.deleteEntry()
         elif text == "clear":
             self.clearScreen()
@@ -110,7 +110,7 @@ class Calculator:
         self.btns[")"].grid(row=0, column=4)
 
         # commands
-        self.btns["del"].grid(row=5, column=0)
+        self.btns["\u2190"].grid(row=5, column=0)
         self.btns["clear"].grid(row=4, column=0)
         self.btns["="].grid(row=5, column=4)
 
