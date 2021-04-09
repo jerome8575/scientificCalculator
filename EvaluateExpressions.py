@@ -17,7 +17,7 @@ def parse(expression):
     exp = []
 
     functions = ["sin", "cos", "tan", "ln"]
-    operators = ["+", "-", "*", "/", "^"]
+    operators = ["+", "\u2013", "*", "/", "^"]
     pi = "π"
     sqrt = "√"
 
@@ -49,10 +49,7 @@ def parse(expression):
                     exp.append(fct)
                     fct = ""
             elif char == "-":
-                if isUnaryNegative(index, expressionList):
-                    exp.append("$")
-                else:
-                    exp.append(char)
+                exp.append("$")
             elif char in operators:
                 exp.append(char)
         index+=1
@@ -66,7 +63,7 @@ def isfloat(value):
     return False
 
 def convertToRPN(expression):
-    precedence = {"+": 2, "-": 2, "*": 3, "/": 3, "^": 4, "sin": 1, "cos": 1, "tan": 1, "ln": 1, "$":5}
+    precedence = {"+": 2, "\u2013": 2, "*": 3, "/": 3, "^": 4, "sqrt": 4, "sin": 1, "cos": 1, "tan": 1, "ln": 1, "$":5}
     functions = ["sin", "cos", "tan", "ln", "$"]
     exp = parse(expression)
     operators = Stack()
@@ -107,7 +104,7 @@ def unaryNegative(num):
     return num * (-1)
 
 def evaluatePostix(pfExpression):
-    ops = {"+": operator.add, "-": operator.sub, "/": operator.truediv, "*": operator.mul, "^": math.pow}
+    ops = {"+": operator.add, "\u2013": operator.sub, "/": operator.truediv, "*": operator.mul, "^": math.pow}
     functions = {"sin": math.sin, "cos": math.cos, "tan": math.tan, "ln": math.log, "sqrt": math.sqrt, "$": unaryNegative}
     stack = Stack()
     for i in range(len(pfExpression)):

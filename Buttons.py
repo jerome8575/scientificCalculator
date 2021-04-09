@@ -28,7 +28,7 @@ class Calculator:
 
         """ creates buttons with specified color, and text, appends them to a dictionary and returns the dictionary"""
 
-        operators = ["/", "*", "+", "-", "="]
+        operators = ["/", "*", "+", "\u2013", "="]
         functions = ["(", ")", "sin", "cos", "tan", "^", "\u221A" ,"ln", "\u2190", "clear", "\u03C0", "e", "x^2"]
         numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "(-)"]
 
@@ -75,7 +75,8 @@ class Calculator:
             text+="("
         elif text == "x^2":
             text = "^2"
-
+        elif text == "(-)":
+            text = "-"
         if text == "=":
             self.enter()
         elif text == "\u2190":
@@ -97,7 +98,7 @@ class Calculator:
         # place operators
         self.btns["/"].grid(row=1, column=4)
         self.btns["*"].grid(row=2, column=4)
-        self.btns["-"].grid(row=3, column=4)
+        self.btns["\u2013"].grid(row=3, column=4)
         self.btns["+"].grid(row=4, column=4)
 
         # place top row trig functions
